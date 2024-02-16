@@ -6,7 +6,28 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: HomeScreen());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const HomeScreen(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromARGB(239, 31, 219, 210),
+        appBarTheme: const AppBarTheme(
+          color: Color.fromARGB(193, 73, 8, 225),
+        ),
+        textTheme: const TextTheme(
+            headlineLarge: TextStyle(
+              fontSize: 21,
+              fontFamily: 'sans-serif',
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 56, 4, 116),
+            ),
+            headlineSmall: TextStyle(
+              fontSize: 14.4,
+              fontFamily: 'verona',
+              fontWeight: FontWeight.w500,
+              color: Color.fromARGB(255, 0, 0, 0),
+            )),
+      ),
+    );
   }
 }
