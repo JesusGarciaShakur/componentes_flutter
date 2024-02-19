@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:practica3/theme/app_theme.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,12 +16,10 @@ class HomeScreen extends StatelessWidget {
           ListTile(
             title: Text(
               'Entradas',
-              style: Theme.of(context).textTheme.headlineLarge,
+              style: AppTheme.lightTheme.textTheme.headlineLarge,
             ),
-            subtitle: Text(
-              'Recuperar informacion en TextField',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
+            subtitle: Text('Recuperar informacion en TextField',
+                style: AppTheme.lightTheme.textTheme.bodySmall),
             leading: const Icon(Icons.input_rounded),
             trailing: const Icon(Icons.arrow_right_alt_outlined),
           ),
@@ -27,7 +27,8 @@ class HomeScreen extends StatelessWidget {
           ListTile(
             title: Text(
               'Lista infinita',
-              style: Theme.of(context).textTheme.headlineLarge,
+              style: GoogleFonts.getFont('Oswald'),
+              //style: Theme.of(context).textTheme.headlineLarge,
             ),
             subtitle: Text(
               'Recuperar muchos elementos',
