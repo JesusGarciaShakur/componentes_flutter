@@ -11,7 +11,10 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('App de componentes de flutter'),
+        title: const Text(
+          'App de componentes de flutter',
+          selectionColor: AppTheme.dBarColor,
+        ),
       ),
       body: ListView(
         children: <Widget>[
@@ -28,10 +31,13 @@ class HomeScreen extends StatelessWidget {
               Icons.input_rounded,
               color: AppTheme.primaryColor,
             ),
-            trailing: const Icon(
-              Icons.arrow_right_alt_outlined,
-              color: AppTheme.primaryColor,
+            trailing: const CircularProgressIndicator(
+              value: 0.5,
             ),
+            // trailing: const Icon(
+            //   Icons.arrow_right_alt_outlined,
+            //   color: AppTheme.primaryColor,
+            // ),
             onTap: () {
               final ruta1 = MaterialPageRoute(builder: (context) {
                 return const Inputs();
