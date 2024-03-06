@@ -50,10 +50,8 @@ class AppTheme {
       headlineLarge: GoogleFonts.acme(
         fontSize: 25.0,
         fontWeight: FontWeight.bold,
-        color: primaryColor,
+        color: dBarColor,
         decoration: TextDecoration.underline,
-        decorationColor: primaryColor,
-        decorationStyle: TextDecorationStyle.double,
         decorationThickness: 1.5,
       ),
 
