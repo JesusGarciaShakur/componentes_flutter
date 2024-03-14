@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:practica3/models/data.dart';
+import 'package:practica3/screens/data_screens.dart';
+import 'package:practica3/screens/home_screen.dart';
+import 'package:practica3/screens/images_screen.dart';
+import 'package:practica3/screens/infinite_list.dart';
+import 'package:practica3/screens/notifications.dart';
 import 'package:practica3/theme/app_theme.dart';
 
 class Inputs extends StatefulWidget {
@@ -9,12 +16,14 @@ class Inputs extends StatefulWidget {
 }
 
 class _InputsState extends State<Inputs> {
+  String? nombre;
   bool valueSwitch = false;
   double sliderValue = 0.0;
-  int foodRadio = 0;
+  String? foodRadio;
   bool postreCheck1 = false;
   bool postreCheck2 = false;
   bool postreCheck3 = false;
+  int selectedIndex = 0; //Elemento seleccionado de la BottomNavigationBar
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,10 +46,27 @@ class _InputsState extends State<Inputs> {
                   style: AppTheme.lightTheme.textTheme.headlineLarge,
                 ),
                 entradasCheck(),
-                const ElevatedButton(
-                  onPressed: null,
+                ElevatedButton(
+                  onPressed: () {
+                    Data data = Data(
+                      nomb: nombre!,
+                      flutter: valueSwitch,
+                      calif: sliderValue.round(),
+                      food: foodRadio!,
+                      icecream: postreCheck1,
+                      choco: postreCheck2,
+                      cake: postreCheck3,
+                    );
+                    final ruta = MaterialPageRoute(builder: (context) {
+                      return DataScreen(
+                        datos: data,
+                      );
+                    });
+                    Navigator.push(context, ruta);
+                  },
                   child: Text(
                     'Guardar',
+                    style: AppTheme.lightTheme.textTheme.headlineLarge,
                   ),
                 ),
               ],
@@ -49,18 +75,81 @@ class _InputsState extends State<Inputs> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedIndex,
+        onTap: (index) => openScreen(context, index),
+        backgroundColor: const Color.fromARGB(255, 20, 18, 18),
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            backgroundColor: Color.fromARGB(255, 24, 23, 23),
+            icon: Icon(
+              Icons.home,
+              color: AppTheme.backColor,
+            ),
             label: 'Inicio',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.next_plan_rounded),
-            label: 'Datos',
+            backgroundColor: Color.fromARGB(255, 24, 23, 23),
+            icon: Icon(
+              Icons.next_plan_rounded,
+              color: AppTheme.backColor,
+            ),
+            label: 'Lista',
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Color.fromARGB(255, 24, 23, 23),
+            icon: Icon(
+              Icons.notification_add,
+              color: AppTheme.backColor,
+            ),
+            label: 'Notificaciones',
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Color.fromARGB(255, 24, 23, 23),
+            icon: Icon(
+              Icons.image,
+              color: AppTheme.backColor,
+            ),
+            label: 'Imagenes',
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Color.fromARGB(255, 24, 23, 23),
+            icon: Icon(
+              Icons.exit_to_app,
+              color: AppTheme.backColor,
+            ),
+            label: 'Lista',
           ),
         ],
       ),
     );
+  }
+
+  openScreen(BuildContext context, int index) {
+    MaterialPageRoute ruta = MaterialPageRoute(
+      builder: (context) => const HomeScreen(),
+    );
+    switch (index) {
+      case 0:
+        ruta = MaterialPageRoute(builder: (context) => const HomeScreen());
+        break;
+      case 1:
+        ruta = MaterialPageRoute(builder: (context) => const InfiniteList());
+        break;
+      case 2:
+        ruta = MaterialPageRoute(builder: (context) => const Notifications());
+        break;
+      case 3:
+        ruta = MaterialPageRoute(builder: (context) => const ImagesScreen());
+        break;
+      case 4:
+        // No aplicable en navegadr ni en windows
+        SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        break;
+    }
+    setState(() {
+      selectedIndex = index;
+      Navigator.push(context, ruta);
+    });
   }
 
   TextField entradaTexto() {
@@ -71,6 +160,9 @@ class _InputsState extends State<Inputs> {
         labelText: 'Escribe tu nombre: ',
         labelStyle: AppTheme.lightTheme.textTheme.headlineLarge,
       ),
+      onChanged: (text) {
+        nombre = text;
+      },
     );
   }
 
@@ -132,12 +224,12 @@ class _InputsState extends State<Inputs> {
             style: AppTheme.lightTheme.textTheme.bodySmall,
           ),
           leading: Radio(
-            value: 1,
+            value: 'Tacos al pastor',
             groupValue: foodRadio,
             onChanged: (value) {
               setState(() {
                 foodRadio = value!;
-                print('Comida seleccionada: $foodRadio');
+                //print('Comida seleccionada: $foodRadio');
               });
             },
           ),
@@ -148,12 +240,12 @@ class _InputsState extends State<Inputs> {
             style: AppTheme.lightTheme.textTheme.bodySmall,
           ),
           leading: Radio(
-            value: 2,
+            value: 'Chileatole',
             groupValue: foodRadio,
             onChanged: (value) {
               setState(() {
                 foodRadio = value!;
-                print('Comida seleccionada: $foodRadio');
+                // print('Comida seleccionada: $foodRadio');
               });
             },
           ),
@@ -164,12 +256,12 @@ class _InputsState extends State<Inputs> {
             style: AppTheme.lightTheme.textTheme.bodySmall,
           ),
           leading: Radio(
-            value: 3,
+            value: 'Carne tartara',
             groupValue: foodRadio,
             onChanged: (value) {
               setState(() {
                 foodRadio = value!;
-                print('Comida seleccionada: $foodRadio');
+                //print('Comida seleccionada: $foodRadio');
               });
             },
           ),
@@ -180,12 +272,12 @@ class _InputsState extends State<Inputs> {
             style: AppTheme.lightTheme.textTheme.bodySmall,
           ),
           leading: Radio(
-            value: 4,
+            value: 'Albondigas',
             groupValue: foodRadio,
             onChanged: (value) {
               setState(() {
                 foodRadio = value!;
-                print('Comida seleccionada: $foodRadio');
+                //print('Comida seleccionada: $foodRadio');
               });
             },
           ),
